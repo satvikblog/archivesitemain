@@ -6,7 +6,7 @@ function loadGAPI() {
 // Initialize the Google API client with OAuth only
 function initClient() {
     gapi.client.init({
-        clientId: '203381975937-ufr719kdv9ngl2of7q2o39f7chpvtqsi.apps.googleusercontent.com',
+        clientId: '1023798265353-5fq1j8vslasd96i8hcrk2m74jp0vf1t7.apps.googleusercontent.com',
         discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
         scope: 'https://www.googleapis.com/auth/drive.file'  // Scope for file access on Google Drive
     }).then(() => {
