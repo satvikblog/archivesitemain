@@ -3,24 +3,30 @@ function loadGAPI() {
     gapi.load('client:auth2', initClient);
 }
 
-// Initialize the Google API client with your Client ID only
+// Initialize the Google API client with OAuth only
 function initClient() {
     gapi.client.init({
         clientId: '203381975937-ufr719kdv9ngl2of7q2o39f7chpvtqsi.apps.googleusercontent.com',
         discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
-        scope: 'https://www.googleapis.com/auth/drive.file'
+        scope: 'https://www.googleapis.com/auth/drive.file'  // Scope for file access on Google Drive
     }).then(() => {
         gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
         updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+    }).catch(error => {
+        console.error("Error initializing Google API client:", error);
+        alert("Failed to initialize Google API client. Check console for more details.");
     });
 }
 
-// Update sign-in status
+// Update sign-in status and handle OAuth sign-in if needed
 function updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
         console.log("User signed in");
     } else {
-        gapi.auth2.getAuthInstance().signIn();
+        gapi.auth2.getAuthInstance().signIn().catch(error => {
+            console.error("Sign-in failed:", error);
+            alert("Google Sign-In failed. Please check the console for more details.");
+        });
     }
 }
 
@@ -29,28 +35,34 @@ function uploadFile() {
     const fileInput = document.getElementById('fileInput').files[0];
     const fileName = document.getElementById('fileName').value || fileInput.name;
 
-    if (fileInput) {
-        const metadata = {
-            name: fileName,
-            mimeType: fileInput.type
-        };
-
-        const form = new FormData();
-        form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
-        form.append('file', fileInput);
-
-        gapi.client.request({
-            path: 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart',
-            method: 'POST',
-            headers: {
-                'Content-Type': 'multipart/related'
-            },
-            body: form
-        }).then((response) => {
-            console.log('File uploaded:', response);
-            displayFile(fileName, response.result.id);
-        }).catch(error => console.error('Upload failed:', error));
+    if (!fileInput) {
+        alert("Please select a file to upload.");
+        return;
     }
+
+    const metadata = {
+        name: fileName,
+        mimeType: fileInput.type
+    };
+
+    const form = new FormData();
+    form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+    form.append('file', fileInput);
+
+    gapi.client.request({
+        path: 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'multipart/related'
+        },
+        body: form
+    }).then((response) => {
+        console.log('File uploaded:', response);
+        displayFile(fileName, response.result.id);
+    }).catch(error => {
+        console.error('Upload failed:', error);
+        alert("File upload failed. Please check the console for more details.");
+    });
 }
 
 // Display uploaded files in the gallery dynamically
