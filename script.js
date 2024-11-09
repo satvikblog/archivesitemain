@@ -3,10 +3,9 @@ function loadGAPI() {
     gapi.load('client:auth2', initClient);
 }
 
-// Initialize the Google API client with your credentials
+// Initialize the Google API client with your Client ID only
 function initClient() {
     gapi.client.init({
-        apiKey: 'YOUR_API_KEY',  // Not needed for OAuth, but you can provide it if required
         clientId: '203381975937-ufr719kdv9ngl2of7q2o39f7chpvtqsi.apps.googleusercontent.com',
         discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
         scope: 'https://www.googleapis.com/auth/drive.file'
