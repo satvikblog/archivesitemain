@@ -74,3 +74,9 @@ h1 {
     font-size: 0.9rem;
     border-radius: 5px;
 }
+
+/* Plasma Glow Animation */
+@keyframes plasmaGlow {
+    0% { box-shadow: 0 0 10px #00d1ff, 0 0 20px #00d1ff, 0 0 30px #00d1ff; }
+    100% { box-shadow: 0 0 20px #009eeb, 0 0 40px #009eeb, 0 0 60px #009eeb; }
+}
