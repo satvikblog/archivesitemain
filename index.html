@@ -5,23 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Satvik's Archive</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://apis.google.com/js/api.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>My Digital Archive</h1>
-        
-        <!-- File Upload Section -->
-        <div class="upload-section">
-            <input type="file" id="fileInput" accept="application/pdf, image/*">
-            <input type="text" id="fileName" placeholder="Enter File Name">
-            <button onclick="uploadFile()">Upload to Google Drive</button>
+    <header>
+        <h1>Welcome to Satvik's Archive</h1>
+        <p>Your important documents in one place</p>
+    </header>
+
+    <main>
+        <div class="file-preview-container">
+            <div class="file-item">
+                <img id="file1-preview" class="file-preview" alt="Preview" />
+                <p class="file-name">Aadhar Card</p>
+                <button class="download-btn" onclick="downloadFile('aadhar.pdf')">Download Aadhar</button>
+            </div>
+            <div class="file-item">
+                <img id="file2-preview" class="file-preview" alt="Preview" />
+                <p class="file-name">Resume</p>
+                <button class="download-btn" onclick="downloadFile('resume.pdf')">Download Resume</button>
+            </div>
+            <div class="file-item">
+                <img id="file3-preview" class="file-preview" alt="Preview" />
+                <p class="file-name">PAN Card</p>
+                <button class="download-btn" onclick="downloadFile('pan.pdf')">Download PAN</button>
+            </div>
         </div>
-        
-        <div class="file-gallery" id="fileGallery">
-            <!-- Dynamically generated file cards will be displayed here -->
-        </div>
-    </div>
-    <script src="script.js"></script>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Satvik. All rights reserved.</p>
+    </footer>
+
+    <script src="scripts.js"></script>
 </body>
 </html>
